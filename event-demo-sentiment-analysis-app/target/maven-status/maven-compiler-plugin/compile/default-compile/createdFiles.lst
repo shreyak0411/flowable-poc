@@ -1,0 +1,3 @@
+org/flowable/eventdemo/service/RandomSentimentService.class
+org/flowable/eventdemo/sentiment/SentimentAnalysisApplication.class
+org/flowable/eventdemo/service/SentimentService.class
