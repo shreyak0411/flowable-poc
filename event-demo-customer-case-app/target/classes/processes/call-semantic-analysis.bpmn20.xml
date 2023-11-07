@@ -24,6 +24,7 @@
                 <flowable:eventOutParameter source="userId" target="userId"></flowable:eventOutParameter>
                 <flowable:eventOutParameter source="comment" target="comment"></flowable:eventOutParameter>
                 <flowable:eventOutParameter source="sentiment" target="sentiment"></flowable:eventOutParameter>
+                <flowable:channelKey>sentimentAnalysisOutboundChannel</flowable:channelKey>
                 <design:stencilid><![CDATA[SendAndReceiveEventTask]]></design:stencilid>
                 <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
             </extensionElements>

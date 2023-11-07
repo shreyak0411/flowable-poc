@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:design="http://flowable.org/design" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://flowable.org/test" design:palette="flowable-process-palette">
+    <process id="httpStartProcess" name="httpStartProcess" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
+
+        <startEvent id="messageStartEvent">
+            <messageEventDefinition messageRef="myStartMessage"/>
+        </startEvent>
+
+        <sequenceFlow id="flow1" sourceRef="messageStartEvent" targetRef="helloTask" />
+
+        <serviceTask id="helloTask" flowable:class="org.flowable.eventdemo.delegate.HelloTask" />
+
+        <sequenceFlow id="flow2" sourceRef="helloTask" targetRef="end" />
+
+        <endEvent id="end" />
+
+    </process>
+    <message id="myStartMessage" name="myStartMessageName"/>
+
+</definitions>
