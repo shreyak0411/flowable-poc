@@ -22,7 +22,9 @@ public class HelloTask implements JavaDelegate {
 
     @Override
   public void execute(DelegateExecution execution) {
-	  System.out.println("Hello Zyient!");
+        String reviewJson = (String) execution.getVariable("review");
+
+        System.out.println("Got this data: " + reviewJson);
   }
 
 }
