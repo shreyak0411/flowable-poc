@@ -12,6 +12,17 @@
 
         <sequenceFlow id="flow2" sourceRef="helloTask" targetRef="end" />
 
+        <!-- Error Boundary Event attached to the service task -->
+        <boundaryEvent id="errorBoundaryEvent" attachedToRef="helloTask" cancelActivity="true">
+            <errorEventDefinition errorRef="error123"/>
+        </boundaryEvent>
+
+        <sequenceFlow sourceRef="errorBoundaryEvent" targetRef="errorHandleTask"/>
+
+        <serviceTask id="errorHandleTask" flowable:class="org.flowable.eventdemo.delegate.ErrorHandleTask"/>
+
+        <sequenceFlow id="flow3" sourceRef="errorHandleTask" targetRef="end" />
+
         <endEvent id="end" />
 
     </process>

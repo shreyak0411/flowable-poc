@@ -12,21 +12,17 @@
  */
 package org.flowable.eventdemo.delegate;
 
-import org.flowable.engine.delegate.BpmnError;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 
 /**
  * @author Shreyak Kumar
  */
-public class HelloTask implements JavaDelegate {
+public class ErrorHandleTask implements JavaDelegate {
 
     @Override
   public void execute(DelegateExecution execution) {
-        String reviewJson = (String) execution.getVariable("review");
-
-        System.out.println("Got this data: " + reviewJson);
-        throw new BpmnError("error123");
+        System.out.println("Handled error");
   }
 
 }
