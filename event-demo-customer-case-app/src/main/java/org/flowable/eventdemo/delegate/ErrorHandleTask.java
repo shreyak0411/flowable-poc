@@ -12,6 +12,7 @@
  */
 package org.flowable.eventdemo.delegate;
 
+import org.flowable.engine.delegate.BpmnError;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 
@@ -23,6 +24,8 @@ public class ErrorHandleTask implements JavaDelegate {
     @Override
   public void execute(DelegateExecution execution) {
         System.out.println("Handled error");
+        // For auto-retry example
+//        throw new RuntimeException("error @ " + System.currentTimeMillis());
   }
 
 }
