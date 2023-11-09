@@ -19,13 +19,13 @@ import org.flowable.engine.delegate.JavaDelegate;
 /**
  * @author Shreyak Kumar
  */
-public class HelloTask implements JavaDelegate {
+public class HelloErrorTask implements JavaDelegate {
 
     @Override
   public void execute(DelegateExecution execution) {
         String reviewJson = (String) execution.getVariable("review");
 
-        System.out.println("Got this data: " + reviewJson);
+        throw new BpmnError("error123");
   }
 
 }

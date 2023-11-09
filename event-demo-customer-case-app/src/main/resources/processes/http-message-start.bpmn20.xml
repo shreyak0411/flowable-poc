@@ -6,27 +6,44 @@
             <messageEventDefinition messageRef="myStartMessage"/>
         </startEvent>
 
-        <sequenceFlow id="flow1" sourceRef="messageStartEvent" targetRef="helloTask" />
+        <sequenceFlow id="flow1" sourceRef="messageStartEvent" targetRef="helloErrorTask" />
 
         <serviceTask id="helloTask" flowable:class="org.flowable.eventdemo.delegate.HelloTask" />
+
+        <serviceTask id="helloErrorTask" flowable:class="org.flowable.eventdemo.delegate.HelloErrorTask" />
+
+        <sequenceFlow id="flow21" sourceRef="helloErrorTask" targetRef="end" />
+
 
         <sequenceFlow id="flow2" sourceRef="helloTask" targetRef="end" />
 
         <!-- Error Boundary Event attached to the service task -->
-        <boundaryEvent id="errorBoundaryEvent" attachedToRef="helloTask" cancelActivity="true">
+        <boundaryEvent id="errorBoundaryEvent" attachedToRef="helloErrorTask" cancelActivity="true">
             <errorEventDefinition errorRef="error123"/>
         </boundaryEvent>
 
         <sequenceFlow sourceRef="errorBoundaryEvent" targetRef="errorHandleTask"/>
 
         <serviceTask id="errorHandleTask"
-                     flowable:class="org.flowable.eventdemo.delegate.ErrorHandleTask"
+                     flowable:class="org.flowable.eventdemo.delegate.ErrorHandleTask"/>
 <!--                     flowable:async="true"-->
 <!--                     flowable:exclusive="true"-->
 <!--                     flowable:failedJobRetryTimeCycle="R10/PT2S"-->
-        />
+<!--        />-->
 
-        <sequenceFlow id="flow3" sourceRef="errorHandleTask" targetRef="end" />
+        <sequenceFlow id="flow40" sourceRef="errorHandleTask" targetRef="exclusiveGw" />
+
+
+        <exclusiveGateway id="exclusiveGw" name="Exclusive Gateway" />
+
+        <sequenceFlow id="flow3" sourceRef="exclusiveGw" targetRef="helloTask">
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[${review.contains('hello')}]]>
+            </conditionExpression>
+        </sequenceFlow>
+
+        <sequenceFlow id="flow4" sourceRef="exclusiveGw" targetRef="end" />
+
 
         <endEvent id="end" />
 
