@@ -12,7 +12,6 @@
  */
 package org.flowable.eventdemo.delegate;
 
-import org.flowable.engine.delegate.BpmnError;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 

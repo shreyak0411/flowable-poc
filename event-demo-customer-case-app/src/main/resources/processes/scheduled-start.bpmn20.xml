@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:design="http://flowable.org/design" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://flowable.org/test" design:palette="flowable-process-palette">
+    <process id="scheduledStartProcess" name="scheduledStartProcess" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
+
+        <startEvent id="theStart">
+            <timerEventDefinition>
+                <timeCycle>R4/2023-11-10T13:15/PT5M</timeCycle>
+            </timerEventDefinition>
+        </startEvent>
+
+        <sequenceFlow id="flow1" sourceRef="theStart" targetRef="helloTask" />
+
+        <serviceTask id="helloTask" flowable:class="org.flowable.eventdemo.delegate.HelloTask" />
+
+        <sequenceFlow id="flow2" sourceRef="helloTask" targetRef="end" />
+
+        <!-- Error Boundary Event attached to the service task -->
+        <boundaryEvent id="errorBoundaryEvent" attachedToRef="helloErrorTask" cancelActivity="true">
+            <errorEventDefinition errorRef="error123"/>
+        </boundaryEvent>
+
+        <sequenceFlow sourceRef="errorBoundaryEvent" targetRef="errorHandleTask"/>
+
+        <serviceTask id="errorHandleTask"
+                     flowable:class="org.flowable.eventdemo.delegate.ErrorHandleTask"/>
+<!--                     flowable:async="true"-->
+<!--                     flowable:exclusive="true"-->
+<!--                     flowable:failedJobRetryTimeCycle="R10/PT2S"-->
+<!--        />-->
+
+        <sequenceFlow id="flow40" sourceRef="errorHandleTask" targetRef="exclusiveGw" />
+
+
+        <exclusiveGateway id="exclusiveGw" name="Exclusive Gateway" />
+
+        <sequenceFlow id="flow3" sourceRef="exclusiveGw" targetRef="helloTask">
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[${review.contains('hello')}]]>
+            </conditionExpression>
+        </sequenceFlow>
+
+        <sequenceFlow id="flow4" sourceRef="exclusiveGw" targetRef="end" />
+
+
+        <endEvent id="end" />
+
+    </process>
+    <message id="myStartMessage" name="myStartMessageName"/>
+
+</definitions>
