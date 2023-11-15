@@ -48,6 +48,6 @@
         <endEvent id="end" />
 
     </process>
-    <message id="myStartMessage" name="myStartMessageName"/>
+    <message id="myStartMessage" name="myStartMessage"/>
 
 </definitions>

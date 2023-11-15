@@ -13,9 +13,7 @@
     <process id="catchSignal">
 
         <startEvent id="start">
-            <timerEventDefinition>
-                <timeCycle>R4/2024-11-10T13:15/PT5M</timeCycle>
-            </timerEventDefinition>
+            <messageEventDefinition messageRef="myEventResumeMessage"/>
         </startEvent>
 
         <sequenceFlow sourceRef="start" targetRef="gw1"/>
@@ -31,7 +29,7 @@
 
         <intermediateCatchEvent id="timerEvent" name="Alert">
             <timerEventDefinition>
-                <timeDuration>PT10S</timeDuration>
+                <timeDuration>PT10M</timeDuration>
             </timerEventDefinition>
         </intermediateCatchEvent>
 
@@ -47,4 +45,7 @@
 
         <endEvent id="end"/>
     </process>
+
+    <message id="myEventResumeMessage" name="myEventResumeMessage"/>
+
 </definitions>

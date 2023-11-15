@@ -20,13 +20,13 @@ public class TestController {
     }
 
     @PostMapping(value = "/start-process-http")
-    public Mono<ResponseEntity<Void>> processReview(@RequestBody String review) {
+    public Mono<ResponseEntity<Void>> processReview(@RequestBody String messageName) {
         // Map the incoming data to process variables if needed
         Map<String, Object> processVariables = new HashMap<>();
-        processVariables.put("review", review);
+//        processVariables.put("review", review);
 
         // Start the process instance using the message name
-        runtimeService.startProcessInstanceByMessage("myCallbackMessageName", processVariables);
+        runtimeService.startProcessInstanceByMessage(messageName, processVariables);
 
         // Return a success response
         return Mono.just(ResponseEntity.ok().build());

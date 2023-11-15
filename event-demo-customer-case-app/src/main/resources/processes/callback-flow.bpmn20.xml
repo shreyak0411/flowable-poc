@@ -5,7 +5,7 @@
     <process id="callbackFlow" name="callbackFlow" flowable:candidateStarterGroups="flowableUser">
 
         <startEvent id="callbackStartEvent">
-            <messageEventDefinition messageRef="myCallbackMessageName"/>
+            <messageEventDefinition messageRef="myCallbackMessage"/>
         </startEvent>
 
         <sequenceFlow id="flow1" sourceRef="callbackStartEvent" targetRef="triggerableServiceTask"/>
@@ -21,6 +21,6 @@
         <endEvent id="end"/>
 
     </process>
-    <message id="myCallbackMessageName" name="myCallbackMessageName"/>
+    <message id="myCallbackMessage" name="myCallbackMessage"/>
 
 </definitions>
