@@ -26,9 +26,19 @@ public class TestController {
         processVariables.put("review", review);
 
         // Start the process instance using the message name
-        runtimeService.startProcessInstanceByMessage("myStartMessageName", processVariables);
+        runtimeService.startProcessInstanceByMessage("myCallbackMessageName", processVariables);
 
         // Return a success response
+        return Mono.just(ResponseEntity.ok().build());
+    }
+
+    @PostMapping(value = "/send-signal")
+    public Mono<ResponseEntity<Void>> sendSignal(@RequestBody String signal) {
+        Map<String, Object> processVariables = new HashMap<>();
+        processVariables.put("someKey", "someValue");
+
+        runtimeService.signalEventReceived(signal, processVariables);
+
         return Mono.just(ResponseEntity.ok().build());
     }
 

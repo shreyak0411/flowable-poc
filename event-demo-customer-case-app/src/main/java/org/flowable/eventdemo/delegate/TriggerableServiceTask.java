@@ -4,18 +4,24 @@ import org.flowable.engine.RuntimeService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.flowable.engine.impl.context.Context;
+import org.flowable.engine.impl.delegate.TriggerableActivityBehavior;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Service
-public class TriggerableService implements JavaDelegate {
+@Service("triggerableServiceTask")
+@Scope("prototype")
+public class TriggerableServiceTask implements JavaDelegate, TriggerableActivityBehavior, Serializable {
 
     private final Map<String, DelegateExecution> executions = new ConcurrentHashMap<>();
 
 
     public void onExternalSystemCallback(String executionId, Object callbackData) {
+        System.out.println("TriggerableService.onExternalSystemCallback");
+
         DelegateExecution execution = executions.remove(executionId);
 
         if (execution != null) {
@@ -34,5 +40,10 @@ public class TriggerableService implements JavaDelegate {
 
         // Call the external system and pass the execution ID for correlation
         // Nothing here since this is example
+    }
+
+    @Override
+    public void trigger(DelegateExecution execution, String signalEvent, Object signalData) {
+        onExternalSystemCallback(execution.getId(), signalData);
     }
 }
