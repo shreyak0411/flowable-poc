@@ -25,11 +25,11 @@
         <sequenceFlow sourceRef="errorBoundaryEvent" targetRef="errorHandleTask"/>
 
         <serviceTask id="errorHandleTask"
-                     flowable:class="org.flowable.eventdemo.delegate.ErrorHandleTask"/>
-<!--                     flowable:async="true"-->
-<!--                     flowable:exclusive="true"-->
-<!--                     flowable:failedJobRetryTimeCycle="R10/PT2S"-->
-<!--        />-->
+                     flowable:class="org.flowable.eventdemo.delegate.ErrorHandleTask"
+                     flowable:async="true"
+                     flowable:exclusive="true"
+                     flowable:failedJobRetryTimeCycle="R10/PT2S"
+        />
 
         <sequenceFlow id="flow40" sourceRef="errorHandleTask" targetRef="exclusiveGw" />
 

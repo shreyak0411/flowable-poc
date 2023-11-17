@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:design="http://flowable.org/design" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://flowable.org/test" design:palette="flowable-process-palette">
+    <process id="httpTaskStartProcess" name="httpTaskStartProcess" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
+
+        <startEvent id="messageStartEvent">
+            <messageEventDefinition messageRef="myHttpStartMessage"/>
+        </startEvent>
+
+        <sequenceFlow id="flow1" sourceRef="messageStartEvent" targetRef="makeHttpCall" />
+
+        <serviceTask id="makeHttpCall" name="Make HTTP Call" flowable:type="http">
+            <extensionElements>
+                <flowable:field name="requestMethod" stringValue="POST" />
+                <flowable:field name="requestUrl" stringValue="http://localhost:8123/start-process-http" />
+                <flowable:field name="requestHeaders" expression="Content-Type: text/plain" />
+                <flowable:field name="requestBody" stringValue="myCallbackMessage" />
+            </extensionElements>
+        </serviceTask>
+
+        <sequenceFlow id="flow4" sourceRef="makeHttpCall" targetRef="end" />
+
+        <endEvent id="end" />
+
+    </process>
+
+    <message id="myHttpStartMessage" name="myHttpStartMessage"/>
+
+</definitions>
