@@ -20,7 +20,7 @@ public class TestController {
     }
 
     @PostMapping(value = "/start-process-http")
-    public Mono<ResponseEntity<Void>> processReview(@RequestBody String messageName) {
+    public Mono<ResponseEntity<String>> processReview(@RequestBody String messageName) {
         // Map the incoming data to process variables if needed
         Map<String, Object> processVariables = new HashMap<>();
 //        processVariables.put("review", review);
@@ -29,7 +29,7 @@ public class TestController {
         runtimeService.startProcessInstanceByMessage(messageName, processVariables);
 
         // Return a success response
-        return Mono.just(ResponseEntity.ok().build());
+        return Mono.just(ResponseEntity.ok("responseOfApi"));
     }
 
     @PostMapping(value = "/send-signal")

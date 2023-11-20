@@ -17,7 +17,11 @@
             </extensionElements>
         </serviceTask>
 
-        <sequenceFlow id="flow4" sourceRef="makeHttpCall" targetRef="end" />
+        <sequenceFlow id="flow4" sourceRef="makeHttpCall" targetRef="processResponseTask" />
+
+        <serviceTask id="processResponseTask" flowable:class="org.flowable.eventdemo.delegate.ProcessResponseDelegate" />
+
+        <sequenceFlow id="flow5" sourceRef="processResponseTask" targetRef="end" />
 
         <endEvent id="end" />
 
